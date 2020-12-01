@@ -20,7 +20,7 @@ body{
 .wonder{
     align-content: center;
     display: grid;
-    grid-template-columns: 10fr 2fr;
+    grid-template-columns: 11fr 2fr 3fr;
     padding: 1vmax;
     border-radius: 4px;
     box-shadow: 1px 1px 3px black;
@@ -32,6 +32,19 @@ body{
     cursor: pointer;
     color: #3c40c6;
     align-self: center;
+    margin: 2px ;
+}
+
+.delete{
+    font-weight: bold;
+    font-size: 0.8em;
+    cursor: pointer;
+    color: #3c40c6;
+    align-self: center;
+}
+
+.delete:active{
+    color: #0fbcf9;
 }
 .visit:active{
     color: #0fbcf9;

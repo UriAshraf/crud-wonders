@@ -23,6 +23,7 @@
         {{#each wonders}}
             <div {{#if visited}}class="wonder visited" {{else}}class="wonder not-visited" {{/if}}>
                 <p class="name">{{name}} - {{location}}</p>
+                <p class="delete">delete</p>
                 {{#unless visited}}
                     <p class=visit>Visit</p>
                 {{/unless}}

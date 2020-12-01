@@ -3,9 +3,11 @@ const template = Handlebars.compile(source)
 
 const render = function(wonders){
     $("#wonders").empty()
+    $("input").val("")
     let newHtml = template({wonders})
     $("#wonders").append(newHtml)
 }
+
 
 const fetch = function(){
     $.get("/wonders", function(response){
@@ -13,16 +15,56 @@ const fetch = function(){
     })
 }
 
+
 const addWonder = function(){
     let newWonder = $("#new-wonder-input").val()
     let newLocation = $("#new-location-input").val()
-    //POST the newWonder to the server
+    
+    let data = { name: newWonder, location: newLocation}
+    $.post('/wonder', data, function (response) {
+        console.log("POST complete")
+        fetch()
+    })
 }
 
-$("#wonders").on("click", ".visit", function(){
-    let wonder = $(this).closest(".wonder").find(".name").text()
+
+const removeWonder = function(wonder) {
+    $.ajax({
+        url: `/wonder/${wonder}`,
+        method: "DELETE",
+        success: function (response) {
+            console.log("delete complete");
+            fetch()
+         }
+    })
+}
+
+
+const updateVisited = function (wonder) {
+    $.ajax({
+        url: `wonder/${wonder}`,
+        method: "PUT",
+        success: function (response) {
+            console.log("PUT complete")
+            fetch()
+        }
+    })
+} 
+
+
+$("#wonders").on("click", ".delete", function(){
+    let wonder = $(this).closest(".wonder").find(".name").text().split("-")[0].trim() || null
+    removeWonder(wonder)
     //PUT this to the server: update the wonder's `visited` status to `true`
 })
+
+
+$("#wonders").on("click", ".visit", function(){
+    let wonder = $(this).closest(".wonder").find(".name").text().split("-")[0].trim() 
+    updateVisited(wonder)
+    //PUT this to the server: update the wonder's `visited` status to `true`
+})
+
 
 
 fetch() //load the data on page load
